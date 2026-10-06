@@ -1,0 +1,30 @@
+Continue my existing TeamUp app. Combine implementation and submission preparation in this task. I have limited credits: reuse existing code, framework, database schema, authentication, and styling. Implement only missing features and fix actual failures. Do not restart or redesign.
+
+First check Part 1. If Supabase keys or migrations are missing, give exact setup steps. Never substitute mock data or claim unverified functionality works.
+
+Complete these features:
+1. Projects: create/edit title, description, category, required skills, open-role labels, capacity including owner, application deadline, and optional repository/demo links. Automatically add the owner as a member. Only owners can edit or close recruitment.
+2. Discovery: searchable project listings with category/skill filters and a simple student directory.
+3. Matching: show matched required skills ÷ total required skills as a percentage with an explanation. Handle empty requirements. No external AI.
+4. Applications: students select a role, submit an introduction, track status, and withdraw pending requests. Owners accept/reject. Prevent duplicates, self-applications, and requests to closed, expired, or full projects.
+5. Dashboard: show owned projects, applications, joined teams, and a private team roster with project details and links.
+
+Keep Supabase Auth and PostgreSQL. Enforce permissions through backend checks and Row Level Security, not just UI controls. Applicants and relevant owners alone can read applications; only members can read private rosters.
+
+Make project creation with owner membership atomic. Accept applications through an authenticated backend calling a transactional database function that verifies ownership, locks the project, checks deadline/capacity, and updates membership and application together. Prevent forged acceptance, duplicate membership, and simultaneous overfilling. Never expose administrative keys.
+
+Do not add chat, notifications, invitations, tasks, uploads, dark mode, or other extras. Hide unfinished controls. Include responsive layouts and useful loading, empty, and error states.
+
+Verify:
+- Two accounts can create → discover → apply → accept → access the same team.
+- Data survives refresh and login.
+- Unrelated users cannot access private data or accept applications.
+- Duplicate requests and simultaneous acceptance cannot exceed capacity.
+
+Run focused tests, existing type checks, and a production build; fix relevant failures. If live testing is blocked, report what remains unverified.
+
+Prepare migrations, a placeholder .env.example, .gitignore excluding secrets, and a concise README with setup, auth redirects, run/build instructions, and demo steps.
+
+If GitHub is connected, push to the configured repository after safely integrating remote changes. Never force-push or overwrite unrelated work. Otherwise provide manual steps. Document deployment requirements without purchasing services.
+
+Finish with a brief report: implemented features, checks passed, remaining setup, and confirmed GitHub/deployment status.
