@@ -35,6 +35,457 @@ export const GetMyProfileResponse = zod.object({
 
 
 /**
+ * @summary Discover projects that are currently recruiting
+ */
+export const getProjectsQueryQMax = 120;
+
+export const getProjectsQueryCategoryMax = 80;
+
+export const getProjectsQuerySkillMax = 80;
+
+
+
+export const GetProjectsQueryParams = zod.object({
+  "q": zod.coerce.string().max(getProjectsQueryQMax).optional(),
+  "category": zod.coerce.string().max(getProjectsQueryCategoryMax).optional(),
+  "skill": zod.coerce.string().max(getProjectsQuerySkillMax).optional()
+})
+
+export const getProjectsResponseMatchPercentMin = 0;
+export const getProjectsResponseMatchPercentMax = 100;
+
+
+
+export const GetProjectsResponseItem = zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(getProjectsResponseMatchPercentMin).max(getProjectsResponseMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+export const GetProjectsResponse = zod.array(GetProjectsResponseItem)
+
+
+/**
+ * @summary Create a project and add its owner as a member atomically
+ */
+export const createProjectBodyTitleMax = 140;
+
+export const createProjectBodyDescriptionMax = 4000;
+
+export const createProjectBodyCategoryMax = 80;
+
+export const createProjectBodyRequiredSkillsItemMax = 80;
+
+export const createProjectBodyRequiredSkillsMax = 12;
+
+export const createProjectBodyOpenRolesItemMax = 100;
+
+export const createProjectBodyOpenRolesMax = 12;
+
+export const createProjectBodyTotalCapacityMin = 2;
+export const createProjectBodyTotalCapacityMax = 100;
+
+export const createProjectBodyRepositoryUrlMax = 500;
+
+export const createProjectBodyDemoUrlMax = 500;
+
+
+
+export const CreateProjectBody = zod.object({
+  "title": zod.string().min(1).max(createProjectBodyTitleMax),
+  "description": zod.string().min(1).max(createProjectBodyDescriptionMax),
+  "category": zod.string().min(1).max(createProjectBodyCategoryMax),
+  "requiredSkills": zod.array(zod.string().min(1).max(createProjectBodyRequiredSkillsItemMax)).max(createProjectBodyRequiredSkillsMax),
+  "openRoles": zod.array(zod.string().min(1).max(createProjectBodyOpenRolesItemMax)).min(1).max(createProjectBodyOpenRolesMax),
+  "totalCapacity": zod.number().int().min(createProjectBodyTotalCapacityMin).max(createProjectBodyTotalCapacityMax),
+  "deadline": zod.coerce.date(),
+  "repositoryUrl": zod.string().url().max(createProjectBodyRepositoryUrlMax).nullable(),
+  "demoUrl": zod.string().url().max(createProjectBodyDemoUrlMax).nullable()
+})
+
+export const createProjectResponseMatchPercentMin = 0;
+export const createProjectResponseMatchPercentMax = 100;
+
+
+
+export const CreateProjectResponse = zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(createProjectResponseMatchPercentMin).max(createProjectResponseMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Update a project owned by the signed-in student
+ */
+export const UpdateProjectParams = zod.object({
+  "projectId": zod.coerce.string().uuid()
+})
+
+export const updateProjectBodyTitleMax = 140;
+
+export const updateProjectBodyDescriptionMax = 4000;
+
+export const updateProjectBodyCategoryMax = 80;
+
+export const updateProjectBodyRequiredSkillsItemMax = 80;
+
+export const updateProjectBodyRequiredSkillsMax = 12;
+
+export const updateProjectBodyOpenRolesItemMax = 100;
+
+export const updateProjectBodyOpenRolesMax = 12;
+
+export const updateProjectBodyTotalCapacityMin = 2;
+export const updateProjectBodyTotalCapacityMax = 100;
+
+export const updateProjectBodyRepositoryUrlMax = 500;
+
+export const updateProjectBodyDemoUrlMax = 500;
+
+
+
+export const UpdateProjectBody = zod.object({
+  "title": zod.string().min(1).max(updateProjectBodyTitleMax),
+  "description": zod.string().min(1).max(updateProjectBodyDescriptionMax),
+  "category": zod.string().min(1).max(updateProjectBodyCategoryMax),
+  "requiredSkills": zod.array(zod.string().min(1).max(updateProjectBodyRequiredSkillsItemMax)).max(updateProjectBodyRequiredSkillsMax),
+  "openRoles": zod.array(zod.string().min(1).max(updateProjectBodyOpenRolesItemMax)).min(1).max(updateProjectBodyOpenRolesMax),
+  "totalCapacity": zod.number().int().min(updateProjectBodyTotalCapacityMin).max(updateProjectBodyTotalCapacityMax),
+  "deadline": zod.coerce.date(),
+  "repositoryUrl": zod.string().url().max(updateProjectBodyRepositoryUrlMax).nullable(),
+  "demoUrl": zod.string().url().max(updateProjectBodyDemoUrlMax).nullable()
+})
+
+export const updateProjectResponseMatchPercentMin = 0;
+export const updateProjectResponseMatchPercentMax = 100;
+
+
+
+export const UpdateProjectResponse = zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(updateProjectResponseMatchPercentMin).max(updateProjectResponseMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Close recruitment for a project owned by the signed-in student
+ */
+export const CloseProjectParams = zod.object({
+  "projectId": zod.coerce.string().uuid()
+})
+
+export const closeProjectResponseMatchPercentMin = 0;
+export const closeProjectResponseMatchPercentMax = 100;
+
+
+
+export const CloseProjectResponse = zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(closeProjectResponseMatchPercentMin).max(closeProjectResponseMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Submit an application to a recruiting project
+ */
+export const SubmitApplicationParams = zod.object({
+  "projectId": zod.coerce.string().uuid()
+})
+
+export const submitApplicationBodySelectedRoleMax = 100;
+
+export const submitApplicationBodyIntroductionMax = 2000;
+
+
+
+export const SubmitApplicationBody = zod.object({
+  "selectedRole": zod.string().min(1).max(submitApplicationBodySelectedRoleMax),
+  "introduction": zod.string().min(1).max(submitApplicationBodyIntroductionMax)
+})
+
+export const SubmitApplicationResponse = zod.object({
+  "id": zod.string().uuid(),
+  "projectId": zod.string().uuid(),
+  "projectTitle": zod.string(),
+  "applicantId": zod.string().uuid(),
+  "applicantName": zod.string(),
+  "applicantCollege": zod.string(),
+  "selectedRole": zod.string(),
+  "introduction": zod.string(),
+  "status": zod.enum(['pending', 'accepted', 'rejected', 'withdrawn']),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Accept an application and add its student as a member atomically
+ */
+export const AcceptApplicationParams = zod.object({
+  "applicationId": zod.coerce.string().uuid()
+})
+
+export const AcceptApplicationResponse = zod.object({
+  "id": zod.string().uuid(),
+  "projectId": zod.string().uuid(),
+  "projectTitle": zod.string(),
+  "applicantId": zod.string().uuid(),
+  "applicantName": zod.string(),
+  "applicantCollege": zod.string(),
+  "selectedRole": zod.string(),
+  "introduction": zod.string(),
+  "status": zod.enum(['pending', 'accepted', 'rejected', 'withdrawn']),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Reject an application for a project owned by the caller
+ */
+export const RejectApplicationParams = zod.object({
+  "applicationId": zod.coerce.string().uuid()
+})
+
+export const RejectApplicationResponse = zod.object({
+  "id": zod.string().uuid(),
+  "projectId": zod.string().uuid(),
+  "projectTitle": zod.string(),
+  "applicantId": zod.string().uuid(),
+  "applicantName": zod.string(),
+  "applicantCollege": zod.string(),
+  "selectedRole": zod.string(),
+  "introduction": zod.string(),
+  "status": zod.enum(['pending', 'accepted', 'rejected', 'withdrawn']),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Withdraw the caller's pending application
+ */
+export const WithdrawApplicationParams = zod.object({
+  "applicationId": zod.coerce.string().uuid()
+})
+
+export const WithdrawApplicationResponse = zod.object({
+  "id": zod.string().uuid(),
+  "projectId": zod.string().uuid(),
+  "projectTitle": zod.string(),
+  "applicantId": zod.string().uuid(),
+  "applicantName": zod.string(),
+  "applicantCollege": zod.string(),
+  "selectedRole": zod.string(),
+  "introduction": zod.string(),
+  "status": zod.enum(['pending', 'accepted', 'rejected', 'withdrawn']),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Search the signed-in student directory
+ */
+export const getStudentsQueryQMax = 120;
+
+export const getStudentsQuerySkillMax = 80;
+
+
+
+export const GetStudentsQueryParams = zod.object({
+  "q": zod.coerce.string().max(getStudentsQueryQMax).optional(),
+  "skill": zod.coerce.string().max(getStudentsQuerySkillMax).optional()
+})
+
+export const GetStudentsResponseItem = zod.object({
+  "id": zod.string().uuid(),
+  "name": zod.string(),
+  "college": zod.string(),
+  "bio": zod.string(),
+  "skills": zod.array(zod.string()),
+  "preferredRole": zod.string(),
+  "hoursAvailablePerWeek": zod.number().int(),
+  "portfolioUrl": zod.string().url().nullable()
+})
+export const GetStudentsResponse = zod.array(GetStudentsResponseItem)
+
+
+/**
+ * @summary Load the signed-in student's projects, applications, and private team rosters
+ */
+export const getDashboardResponseOwnedProjectsItemMatchPercentMin = 0;
+export const getDashboardResponseOwnedProjectsItemMatchPercentMax = 100;
+
+export const getDashboardResponseJoinedProjectsItemMatchPercentMin = 0;
+export const getDashboardResponseJoinedProjectsItemMatchPercentMax = 100;
+
+export const getDashboardResponseRostersItemProjectMatchPercentMin = 0;
+export const getDashboardResponseRostersItemProjectMatchPercentMax = 100;
+
+
+
+export const GetDashboardResponse = zod.object({
+  "ownedProjects": zod.array(zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(getDashboardResponseOwnedProjectsItemMatchPercentMin).max(getDashboardResponseOwnedProjectsItemMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})),
+  "joinedProjects": zod.array(zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(getDashboardResponseJoinedProjectsItemMatchPercentMin).max(getDashboardResponseJoinedProjectsItemMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})),
+  "submittedApplications": zod.array(zod.object({
+  "id": zod.string().uuid(),
+  "projectId": zod.string().uuid(),
+  "projectTitle": zod.string(),
+  "applicantId": zod.string().uuid(),
+  "applicantName": zod.string(),
+  "applicantCollege": zod.string(),
+  "selectedRole": zod.string(),
+  "introduction": zod.string(),
+  "status": zod.enum(['pending', 'accepted', 'rejected', 'withdrawn']),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})),
+  "receivedApplications": zod.array(zod.object({
+  "id": zod.string().uuid(),
+  "projectId": zod.string().uuid(),
+  "projectTitle": zod.string(),
+  "applicantId": zod.string().uuid(),
+  "applicantName": zod.string(),
+  "applicantCollege": zod.string(),
+  "selectedRole": zod.string(),
+  "introduction": zod.string(),
+  "status": zod.enum(['pending', 'accepted', 'rejected', 'withdrawn']),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+})),
+  "rosters": zod.array(zod.object({
+  "project": zod.object({
+  "id": zod.string().uuid(),
+  "ownerId": zod.string().uuid(),
+  "ownerName": zod.string(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "requiredSkills": zod.array(zod.string()),
+  "openRoles": zod.array(zod.string()),
+  "totalCapacity": zod.number().int(),
+  "memberCount": zod.number().int(),
+  "deadline": zod.coerce.date(),
+  "status": zod.enum(['recruiting', 'closed']),
+  "repositoryUrl": zod.string().url().nullable(),
+  "demoUrl": zod.string().url().nullable(),
+  "matchedSkills": zod.array(zod.string()),
+  "matchPercent": zod.number().int().min(getDashboardResponseRostersItemProjectMatchPercentMin).max(getDashboardResponseRostersItemProjectMatchPercentMax).nullable(),
+  "createdAt": zod.coerce.date(),
+  "updatedAt": zod.coerce.date()
+}),
+  "members": zod.array(zod.object({
+  "userId": zod.string().uuid(),
+  "name": zod.string(),
+  "role": zod.string(),
+  "joinedAt": zod.coerce.date()
+}))
+}))
+})
+
+
+/**
  * @summary Create or update the signed-in student's profile
  */
 export const saveMyProfileBodyNameMax = 100;

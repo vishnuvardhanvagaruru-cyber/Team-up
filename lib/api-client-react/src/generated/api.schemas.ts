@@ -79,7 +79,185 @@ export interface ProfileInput {
   portfolioUrl: string | null;
 }
 
+export type ProjectStatus = typeof ProjectStatus[keyof typeof ProjectStatus];
+
+
+export const ProjectStatus = {
+  recruiting: 'recruiting',
+  closed: 'closed',
+} as const;
+
+export interface Project {
+  id: string;
+  ownerId: string;
+  ownerName: string;
+  title: string;
+  description: string;
+  category: string;
+  requiredSkills: string[];
+  openRoles: string[];
+  totalCapacity: number;
+  memberCount: number;
+  deadline: string;
+  status: ProjectStatus;
+  /** @nullable */
+  repositoryUrl: string | null;
+  /** @nullable */
+  demoUrl: string | null;
+  matchedSkills: string[];
+  /**
+     * @minimum 0
+     * @maximum 100
+     * @nullable
+     */
+  matchPercent: number | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProjectInput {
+  /**
+     * @minLength 1
+     * @maxLength 140
+     */
+  title: string;
+  /**
+     * @minLength 1
+     * @maxLength 4000
+     */
+  description: string;
+  /**
+     * @minLength 1
+     * @maxLength 80
+     */
+  category: string;
+  /**
+     * @maxItems 12
+     * @items.minLength 1
+     * @items.maxLength 80
+     */
+  requiredSkills: string[];
+  /**
+     * @minItems 1
+     * @maxItems 12
+     * @items.minLength 1
+     * @items.maxLength 100
+     */
+  openRoles: string[];
+  /**
+     * @minimum 2
+     * @maximum 100
+     */
+  totalCapacity: number;
+  deadline: string;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  repositoryUrl: string | null;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  demoUrl: string | null;
+}
+
+export interface ApplicationInput {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  selectedRole: string;
+  /**
+     * @minLength 1
+     * @maxLength 2000
+     */
+  introduction: string;
+}
+
+export type ApplicationStatus = typeof ApplicationStatus[keyof typeof ApplicationStatus];
+
+
+export const ApplicationStatus = {
+  pending: 'pending',
+  accepted: 'accepted',
+  rejected: 'rejected',
+  withdrawn: 'withdrawn',
+} as const;
+
+export interface Application {
+  id: string;
+  projectId: string;
+  projectTitle: string;
+  applicantId: string;
+  applicantName: string;
+  applicantCollege: string;
+  selectedRole: string;
+  introduction: string;
+  status: ApplicationStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Student {
+  id: string;
+  name: string;
+  college: string;
+  bio: string;
+  skills: string[];
+  preferredRole: string;
+  hoursAvailablePerWeek: number;
+  /** @nullable */
+  portfolioUrl: string | null;
+}
+
+export interface TeamMember {
+  userId: string;
+  name: string;
+  role: string;
+  joinedAt: string;
+}
+
+export interface ProjectRoster {
+  project: Project;
+  members: TeamMember[];
+}
+
+export interface DashboardData {
+  ownedProjects: Project[];
+  joinedProjects: Project[];
+  submittedApplications: Application[];
+  receivedApplications: Application[];
+  rosters: ProjectRoster[];
+}
+
 export interface ErrorResponse {
   error: string;
 }
+
+export type GetProjectsParams = {
+/**
+ * @maxLength 120
+ */
+q?: string;
+/**
+ * @maxLength 80
+ */
+category?: string;
+/**
+ * @maxLength 80
+ */
+skill?: string;
+};
+
+export type GetStudentsParams = {
+/**
+ * @maxLength 120
+ */
+q?: string;
+/**
+ * @maxLength 80
+ */
+skill?: string;
+};
 

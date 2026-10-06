@@ -6,7 +6,7 @@ import { setAuthTokenGetter } from '@workspace/api-client-react';
 const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim();
 const supabaseKey = (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined)?.trim();
 export const supabaseConfigured = Boolean(supabaseUrl && supabaseKey);
-export const setupMessage = 'TeamUp authentication needs setup. Add VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY to the frontend environment, and SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY to the backend environment.';
+export const setupMessage = 'Add your Supabase publishable key as VITE_SUPABASE_PUBLISHABLE_KEY for the frontend and SUPABASE_PUBLISHABLE_KEY for the API. Use the same key in both places; never use a service-role or secret key.';
 
 export const supabase: SupabaseClient | null = supabaseConfigured
   ? createClient(supabaseUrl!, supabaseKey!, {

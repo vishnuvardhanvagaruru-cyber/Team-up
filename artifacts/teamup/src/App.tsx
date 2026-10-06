@@ -5,11 +5,12 @@ import { ArrowRight, ArrowUpRight, Check, ChevronRight, Compass, GraduationCap, 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Skill, getGetMyProfileQueryKey, useGetMyProfile, useSaveMyProfile } from '@workspace/api-client-react';
+import { Skill, getGetDashboardQueryKey, getGetMyProfileQueryKey, useGetDashboard, useGetMyProfile, useSaveMyProfile } from '@workspace/api-client-react';
 import type { ProfileInput } from '@workspace/api-client-react';
 import { AuthProvider, setupMessage, supabase, supabaseConfigured, useAuth } from '@/lib/auth';
 import { Form } from '@/components/ui/form';
 import NotFound from '@/pages/not-found';
+import { DashboardTeamup, ProjectsPage, StudentsPage } from '@/pages/teamup';
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 20_000, refetchOnWindowFocus: false } } });
 const authFieldsSchema = z.object({
@@ -61,6 +62,7 @@ function Header({ mode = 'public' }: { mode?: 'public' | 'app' }) {
         <a href="#why-teamup" onClick={() => setMenuOpen(false)} data-testid="link-why-teamup">Why teamup</a>
         {session ? <Link className="btn btn-primary nav-cta" href="/dashboard" data-testid="link-nav-dashboard">Go to your space <ArrowRight size={16} /></Link> : <><Link className="nav-login" href="/login" data-testid="link-nav-login">Log in</Link><Link className="btn btn-primary nav-cta" href="/signup" data-testid="link-nav-signup">Get started <ArrowRight size={16} /></Link></>}
       </> : <>
+        {session && <><Link href="/projects" className="nav-login" data-testid="link-nav-projects">Discover projects</Link><Link href="/students" className="nav-login" data-testid="link-nav-students">Students</Link></>}
         {session && <><Link href="/dashboard" className="nav-login" data-testid="link-nav-dashboard">Your space</Link><Link href="/profile" className="nav-login" data-testid="link-nav-profile">Profile</Link></>}
         {session && <SignOutButton />}
       </>}
@@ -220,6 +222,7 @@ function Dashboard() {
   const { session } = useAuth();
   const [, navigate] = useLocation();
   const query = useGetMyProfile({ query: { queryKey: getGetMyProfileQueryKey(), retry: false, enabled: Boolean(session) } });
+  const teamupQuery = useGetDashboard({ query: { queryKey: getGetDashboardQueryKey(), retry: false, enabled: Boolean(session) } });
   const profile = query.data;
   const missingProfile = !query.isLoading && isApiStatus(query.error, 404);
   useEffect(() => { if (missingProfile) navigate('/profile'); }, [missingProfile, navigate]);
@@ -234,6 +237,9 @@ function Dashboard() {
       <div className="skill-pills">{profile.skills.map(skill => <span key={skill}>{skill}</span>)}</div>
       <div className="summary-bottom"><span>{profile.preferredRole || 'Role not set'} <i /> {profile.hoursAvailablePerWeek} hrs / week</span><Link href="/profile" className="text-link" data-testid="link-edit-profile">Edit profile <ArrowUpRight size={15} /></Link></div>
     </div> : <div className="dash-card"><span className="card-kicker">FIRST THINGS FIRST</span><h2 className="display-font">Let’s make your profile feel like you.</h2><p>Your profile is visible to signed-in students. Share what you’re good at and the kind of role you’d love to play.</p><button className="btn btn-primary" onClick={() => navigate('/profile')} data-testid="button-complete-profile">Complete your profile <ArrowRight size={16} /></button></div>}
+    {profile && <div className="teamup-dashboard-data">
+      {teamupQuery.isLoading ? <div className="teamup-panel loading-card"><div className="skeleton sk-title" /><div className="skeleton sk-line" /><div className="skeleton sk-line" /></div> : teamupQuery.isError ? <div className="teamup-panel teamup-error" role="alert"><h2>Your project space could not load</h2><p>{errorMessage(teamupQuery.error, 'We could not load your projects and applications.')}</p><button className="btn btn-soft" onClick={() => void teamupQuery.refetch()}>Try again</button></div> : teamupQuery.data ? <DashboardTeamup data={teamupQuery.data} /> : null}
+    </div>}
     <div className="dash-footnote"><span className="footnote-icon"><Check size={15} /></span> No pitch deck required. Just you, and what you’d like to make.</div>
   </main><Footer /></div></AuthGate>;
 }
@@ -337,6 +343,8 @@ function RouteSwitch() {
     <Route path="/reset-password"><AuthForm variant="reset" /></Route>
     <Route path="/dashboard" component={Dashboard} />
     <Route path="/profile" component={ProfilePage} />
+    <Route path="/projects"><AuthGate><div className="app-page page-in"><Header mode="app" /><ProjectsPage /><Footer /></div></AuthGate></Route>
+    <Route path="/students"><AuthGate><div className="app-page page-in"><Header mode="app" /><StudentsPage /><Footer /></div></AuthGate></Route>
     <Route component={NotFound} />
   </Switch>;
 }

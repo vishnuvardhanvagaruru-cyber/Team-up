@@ -1,7 +1,7 @@
 kind = "web"
 previewPath = "/"
 title = "TeamUp"
-description = "A student collaboration app for discovering teammates and building project teams on campus. This first build includes Supabase email authentication, protected dashboard and profile onboarding/editing, with a secure profile API."
+description = "TeamUp helps students create projects, discover collaborators, apply for roles, manage applications, and view private team rosters with Supabase Auth and row-level database security."
 version = "1.0.0"
 id = "artifacts/teamup"
 router = "path"
