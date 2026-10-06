@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "TeamUp"
+description = "A student collaboration app for discovering teammates and building project teams on campus. This first build includes Supabase email authentication, protected dashboard and profile onboarding/editing, with a secure profile API."
+version = "1.0.0"
+id = "artifacts/teamup"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18832
+
+[services.development]
+run = "pnpm --filter @workspace/teamup run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/teamup", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/teamup/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18832"
+BASE_PATH = "/"

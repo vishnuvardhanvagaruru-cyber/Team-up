@@ -1,0 +1,67 @@
+Continue building my existing TeamUp application for an Education hackathon. I have a limited Replit credit budget.
+
+This reduced scope overrides earlier requests for extra features. Inspect the existing code briefly and reuse completed work. Do not restart the project, change its framework, replace its working backend, or redesign working screens. Implement only missing or broken requirements in this part.
+
+TeamUp helps students find teammates for projects and hackathons.
+
+Working rules for all three parts:
+- Keep the application full-stack with a frontend, authenticated backend endpoints, and Supabase PostgreSQL.
+- Preserve the current stack. If starting from an empty project, use React + TypeScript + Vite and a small Express backend.
+- Use Supabase Auth and database. No substitute database or custom password storage.
+- Reuse installed libraries and existing components.
+- Do not build chat, notifications, invitations, task boards, uploads, dark mode, admin panels, or external AI integrations.
+- Preserve existing data. Use additive migrations instead of destructive resets.
+- Do not rebuild features that already work.
+- Keep progress reports short and make only necessary changes.
+
+PART 1: AUTHENTICATION AND PROFILES
+
+1. Configure Supabase using existing environment variable names.
+   Project URL: https://pupdhcsdptswtzostqya.supabase.co
+   Read the publishable key from the environment. Never hardcode credentials.
+   If configuration is missing, show a clear setup message and provide exact variable names.
+
+2. Implement real email/password signup, login, logout, session restoration, and protected routes.
+   Handle email confirmation when enabled.
+   Include forgot/reset password if already implemented; otherwise add a minimal working flow.
+   Document required authentication redirect URLs.
+   Do not show protected content before session initialization finishes.
+
+3. After first login, show a simple profile form:
+   - Name
+   - College
+   - Short bio
+   - Skills selected from a shared list
+   - Preferred project role
+   - Hours available per week
+   - Optional GitHub/portfolio link
+
+   Save profiles in Supabase and allow editing. Use initials for avatars.
+   Explain that profile details are visible to signed-in students. Keep email addresses out of public profile records.
+
+4. Reuse the existing database schema. If no schema exists, use four core tables:
+   - profiles
+   - projects
+   - applications
+   - project_members
+
+   Plan fields for the next part:
+   Projects need owner, title, description, category, required skills, open-role labels, total capacity including owner, deadline, recruiting/closed status, optional repository/demo links, and timestamps.
+   Applications need project, applicant, selected role, introduction, status, and timestamps.
+   Memberships need project, user, role, and joined timestamp.
+
+   Use foreign keys and uniqueness constraints. Skill arrays and role labels are sufficient for this small version; do not add a complex role-capacity system.
+
+5. Enable Row Level Security immediately.
+   Students can edit only their own profiles.
+   Restrict remaining tables until their appropriate policies are implemented.
+   Never use broad write policies as a temporary shortcut.
+
+6. Provide a minimal responsive shell with TeamUp branding, navigation, profile page, and dashboard.
+   Keep existing styling where possible. Use simple cards, readable typography, an indigo accent, and helpful loading/error states.
+   Hide unfinished navigation.
+
+Save SQL in migration files. If migrations cannot be applied automatically, tell me exactly which file to run in Supabase SQL Editor. Do not claim the database is ready until it is verified.
+
+Run a focused type/build check, fix relevant errors, and stop after this part.
+Report only what works, any setup action I must take, and anything unverified.
