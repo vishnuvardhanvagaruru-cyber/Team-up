@@ -84,7 +84,47 @@ function SignOutButton() {
 }
 
 function Footer() {
-  return <footer className="site-footer"><div className="wrap footer-inner"><Brand /><p>Good things get built together.</p><span>Made for the next big idea on campus.</span></div></footer>;
+  const { session } = useAuth();
+
+  return (
+    <footer className="site-footer teamup-footer">
+      <div className="wrap">
+        <div className="teamup-footer-top">
+          <div>
+            <Brand />
+            <p>
+              Find your people. Fill the skill gaps.
+              Build something together.
+            </p>
+          </div>
+
+          <nav
+            className="teamup-footer-links"
+            aria-label="Footer navigation"
+          >
+            {session ? (
+              <>
+                <Link href="/projects">Discover projects</Link>
+                <Link href="/students">Find teammates</Link>
+                <Link href="/dashboard">Your space</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/">Home</Link>
+                <Link href="/signup">Join TeamUp</Link>
+                <Link href="/login">Log in</Link>
+              </>
+            )}
+          </nav>
+        </div>
+
+        <div className="teamup-footer-bottom">
+          <span>© {new Date().getFullYear()} TeamUp</span>
+          <span>Built for students who build.</span>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
 function Landing() {

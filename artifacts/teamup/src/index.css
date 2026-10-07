@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -568,4 +568,922 @@ textarea.control { min-height: 112px; resize: vertical; }
   .teamup-form-actions .btn { width: 100%; justify-content: center; }
   .application-card-head { align-items: flex-start; }
   .owned-project-head { align-items: flex-start; }
+}
+/* TeamUp: modern light interface */
+:root {
+  --tu-primary: #4f46e5;
+  --tu-text: #17233b;
+  --tu-muted: #64748b;
+  --tu-border: #e2e8f0;
+  --tu-surface: #ffffff;
+}
+
+body {
+  background: #f7f9fc;
+  color: var(--tu-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.teamup-page {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  padding: 36px 24px 64px;
+}
+
+.teamup-page-heading {
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.teamup-page-heading h1 {
+  color: var(--tu-text);
+  font-size: clamp(30px, 4vw, 44px);
+  letter-spacing: -1.4px;
+}
+
+.teamup-panel,
+.project-card,
+.student-card,
+.roster-card,
+.joined-project,
+.owned-project {
+  background: var(--tu-surface);
+  border: 1px solid var(--tu-border);
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgb(15 23 42 / 4%);
+}
+
+.teamup-panel {
+  padding: 26px;
+}
+
+.project-card,
+.student-card {
+  padding: 24px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.project-card:hover,
+.student-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgb(15 23 42 / 8%);
+}
+
+.teamup-grid {
+  gap: 20px;
+}
+
+.teamup-muted,
+.project-owner,
+.project-description {
+  color: var(--tu-muted);
+}
+
+.project-description {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Inputs and visible interaction states */
+.control,
+.filter-search input,
+.discovery-filters .control {
+  border: 1px solid #d8e0ed;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--tu-text);
+  font-size: 14px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.control:focus,
+.filter-search input:focus,
+.discovery-filters .control:focus {
+  outline: none;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 4px rgb(99 102 241 / 12%);
+}
+
+.btn {
+  border-radius: 12px;
+  min-height: 42px;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.btn-primary {
+  background: var(--tu-primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(79 70 229 / 18%);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible,
+.text-button:focus-visible,
+.text-link:focus-visible {
+  outline: 3px solid #a5b4fc;
+  outline-offset: 3px;
+}
+
+.category-pill {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.status-pill {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-closed,
+.status-rejected,
+.status-withdrawn {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.application-card {
+  padding: 18px;
+  background: #fafbfe;
+  border-color: var(--tu-border);
+  border-radius: 14px;
+}
+
+/* Team Fit Studio */
+.fit-shell {
+  margin-top: 12px;
+  border: 1px solid #dfe3f4;
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgb(15 23 42 / 4%);
+}
+
+.fit-toggle {
+  padding: 20px 24px;
+  background: #f0f3ff;
+  color: #4338ca;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.fit-toggle > svg {
+  transition: transform 180ms ease;
+}
+
+.fit-body {
+  padding: 28px;
+  font-size: 14px;
+}
+
+.fit-stats {
+  gap: 14px;
+}
+
+.fit-stats > div {
+  padding: 20px;
+  border: 1px solid #e8ecf5;
+  border-radius: 16px;
+  background: #f8faff;
+}
+
+.fit-stats strong {
+  color: #4338ca;
+  font-size: clamp(26px, 3vw, 34px);
+  font-variant-numeric: tabular-nums;
+}
+
+.fit-stats span,
+.fit-note {
+  color: #64748b;
+}
+
+.fit-skill,
+.fit-candidate {
+  border-radius: 14px;
+}
+
+.fit-covered {
+  background: #f0fdf7;
+  border-color: #bbebd5;
+  color: #166549;
+}
+
+.fit-missing {
+  background: #fffbf2;
+  border-color: #f2dfb3;
+  color: #855d16;
+}
+
+.fit-candidate {
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.fit-candidate:hover {
+  border-color: #a5b4fc;
+}
+
+.fit-selected {
+  border-color: #818cf8;
+  background: #eef2ff;
+}
+
+.fit-candidate:has(input:disabled) {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.fit-simulation {
+  padding: 20px;
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.fit-planning {
+  background: #f8fafc;
+  border: 1px solid var(--tu-border);
+}
+
+.fit-quick-skills > .skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fit-quick-skills button:hover {
+  background: #e0e7ff;
+}
+
+/* Tablet and mobile */
+@media (max-width: 900px) {
+  .teamup-two-column,
+  .roster-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fit-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .teamup-page {
+    padding: 24px 16px 44px;
+  }
+
+  .teamup-panel,
+  .project-card,
+  .student-card,
+  .fit-body {
+    padding: 18px;
+  }
+
+  .fit-toggle {
+    padding: 18px;
+  }
+
+  .teamup-grid,
+  .discovery-filters,
+  .student-filters,
+  .fit-skill-map {
+    grid-template-columns: 1fr;
+  }
+
+  .teamup-page-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .fit-stats > div {
+    padding: 14px;
+  }
+
+  .application-actions .btn {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .project-card,
+  .student-card,
+  .fit-candidate,
+  .fit-toggle > svg {
+    transition: none;
+    transform: none;
+  }
+}
+/* TeamUp — dark dashboard inspired by your reference */
+.app-page {
+  --foreground: 225 20% 94%;
+  --muted-foreground: 225 12% 68%;
+  --border: 230 15% 23%;
+  --primary: 80 90% 70%;
+
+  min-height: 100vh;
+  color-scheme: dark;
+  color: #eef0f8;
+  background:
+    radial-gradient(ellipse at 10% 0%, #26203c 0%, transparent 42%),
+    radial-gradient(ellipse at 95% 5%, #16253e 0%, transparent 38%),
+    #101117;
+}
+
+/* Navigation */
+.app-page .site-header {
+  background: #13151ee8;
+  border-bottom: 1px solid #292d3c;
+}
+
+.app-page .brand {
+  color: #f6f7fb;
+}
+
+.app-page .brand-mark {
+  background: #c6f778;
+  color: #17220d;
+}
+
+.app-page .nav-actions,
+.app-page .nav-login {
+  color: #b7bdce;
+}
+
+.app-page .nav-actions > a:not(.btn):hover {
+  color: #c6f778;
+}
+
+.app-page .mobile-menu,
+.app-page .btn-soft {
+  background: #242734;
+  color: #eef0f8;
+  border-color: #393e50;
+}
+
+/* Compact dashboard heading */
+.app-page .dashboard {
+  padding-top: 32px;
+}
+
+.app-page .dash-welcome {
+  margin-block: 18px 28px;
+  gap: 20px;
+}
+
+.app-page .dash-welcome h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -1.5px;
+}
+
+.app-page .welcome-illustration {
+  display: none;
+}
+
+/* Cards and panels */
+.app-page :is(
+  .dash-card, .teamup-panel, .project-card, .student-card,
+  .owned-project, .joined-project, .roster-card,
+  .application-card, .profile-card, .fit-shell
+) {
+  background: #1c1f2a;
+  border: 1px solid #303545;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px #00000018;
+}
+
+.app-page :is(.project-card, .student-card) {
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.app-page :is(.project-card, .student-card):hover {
+  transform: translateY(-3px);
+  border-color: #7e8c65;
+}
+
+.app-page :is(h1, h2, h3, h4) {
+  color: #f2f3fa;
+}
+
+.app-page :is(
+  p, .teamup-muted, .project-meta, .project-owner,
+  .helper, .fit-note, .card-kicker, .dash-eyebrow
+) {
+  color: #b0b7ca;
+}
+
+.app-page .dash-welcome h1 span,
+.app-page :is(.text-link, .text-button, .project-links a) {
+  color: #c6f778;
+}
+
+/* Buttons and forms */
+.app-page .btn-primary {
+  background: #c6f778;
+  color: #17220d;
+  box-shadow: none;
+}
+
+.app-page .btn-primary:hover:not(:disabled) {
+  background: #d8ff9d;
+}
+
+.app-page :is(.field label, .field-label) {
+  color: #e3e6f2;
+}
+
+.app-page .control,
+.app-page .filter-search input {
+  background: #141720;
+  color: #f0f2fa;
+  border-color: #3a4052;
+}
+
+.app-page .control::placeholder,
+.app-page .filter-search input::placeholder {
+  color: #939db4;
+}
+
+.app-page .control:focus,
+.app-page .filter-search input:focus {
+  border-color: #c6f778;
+  box-shadow: 0 0 0 3px #c6f77820;
+}
+
+.app-page :is(button, a, input, textarea, select):focus-visible {
+  outline: 2px solid #c6f778;
+  outline-offset: 3px;
+}
+
+.app-page .category-pill {
+  background: #39304f;
+  color: #dfcaff;
+}
+
+.app-page .status-pill {
+  background: #243c31;
+  color: #b6f3cd;
+}
+
+.app-page :is(.status-closed, .status-rejected, .status-withdrawn) {
+  background: #333745;
+  color: #c2c8d8;
+}
+
+.app-page :is(.match-box, .role-list span) {
+  background: #272b3b;
+  color: #d5d9ed;
+  border-color: #3a4052;
+}
+
+.app-page .match-box strong {
+  color: #dfcaff;
+}
+
+/* Team Fit: colorful statistics */
+.app-page .fit-toggle {
+  background: #242838;
+  color: #e1d1ff;
+}
+
+.app-page .fit-toggle small {
+  color: #b7bdd2;
+}
+
+.app-page .fit-body {
+  color: #c4cadb;
+}
+
+.app-page .fit-stats > div {
+  background: #282d3d;
+  border-color: #3a4053;
+}
+
+.app-page .fit-stats strong {
+  color: #e1d1ff;
+}
+
+.app-page .fit-stats span {
+  color: #c2c8dc;
+}
+
+.app-page .fit-stats > div:first-child {
+  background: #c6f778;
+  border-color: #c6f778;
+}
+
+.app-page .fit-stats > div:nth-child(2) {
+  background: #f4e982;
+  border-color: #f4e982;
+}
+
+.app-page .fit-stats > div:nth-child(3) {
+  background: #d9c5f5;
+  border-color: #d9c5f5;
+}
+
+.app-page .fit-stats > div:nth-child(-n+3) :is(strong, span) {
+  color: #202419;
+}
+
+.app-page .fit-covered {
+  background: #22372e;
+  border-color: #3e6850;
+  color: #c4f6d7;
+}
+
+.app-page .fit-missing {
+  background: #393323;
+  border-color: #70613c;
+  color: #f4e3a7;
+}
+
+.app-page .fit-planning {
+  background: #242838;
+  border-color: #383f53;
+}
+
+.app-page .fit-planning input[type="range"],
+.app-page .fit-candidate input {
+  accent-color: #c6f778;
+}
+
+.app-page .fit-simulation {
+  background: #d9c5f5;
+  color: #302442;
+}
+
+.app-page .fit-candidate {
+  background: #202430;
+  border-color: #3a4154;
+}
+
+.app-page .fit-candidate strong {
+  color: #f0f2fa;
+}
+
+.app-page .fit-adds {
+  color: #c6f778;
+}
+
+.app-page .fit-selected {
+  background: #2c3740;
+  border-color: #c6f778;
+}
+
+.app-page .fit-kickoff {
+  border-color: #3a4052;
+}
+
+.app-page .fit-quick-skills button {
+  background: #303246;
+  color: #e1d1ff;
+  border-color: #51506a;
+}
+
+/* Responsive dashboard */
+@media (max-width: 700px) {
+  .app-page .teamup-two-column,
+  .app-page .roster-grid,
+  .app-page .fit-skill-map {
+    grid-template-columns: 1fr;
+  }
+
+  .app-page .fit-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-page .nav-actions {
+    background: #1c1f2a;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-page *,
+  .app-page *::before,
+  .app-page *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* Consistent typography */
+:root {
+  --app-font-sans: 'Inter', system-ui, sans-serif;
+}
+
+body,
+button,
+input,
+textarea,
+select,
+.display-font,
+.brand,
+h1, h2, h3, h4,
+.project-card h2,
+.student-card-heading h2,
+.empty-state h2,
+.teamup-error h2,
+.owned-project-head h3,
+.roster-card h3,
+.joined-project h3 {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.035em;
+}
+
+body {
+  line-height: 1.6;
+}
+
+/* New dark footer */
+.site-footer.teamup-footer {
+  background: #11131b;
+  border-top: 1px solid #303545;
+  padding: 32px 0 20px;
+  color: #edf0f8;
+}
+
+.teamup-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.teamup-footer .brand {
+  color: #f5f7fb;
+  font-size: 24px;
+  letter-spacing: -1px;
+}
+
+.teamup-footer .brand-mark {
+  background: #c6f778;
+  color: #17220d;
+}
+
+.site-footer.teamup-footer p {
+  max-width: 360px;
+  margin: 12px 0 0;
+  color: #aeb7cb;
+  font-size: 13px;
+}
+
+.teamup-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: 8px;
+}
+
+.teamup-footer-links a {
+  color: #d3d9e8;
+  font-size: 13px;
+  transition: color 150ms ease;
+}
+
+.teamup-footer-links a:hover {
+  color: #c6f778;
+}
+
+.teamup-footer-links a:focus-visible {
+  outline: 2px solid #c6f778;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+
+.teamup-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid #292e3d;
+  color: #9ca7bd;
+  font-size: 12px;
+}
+
+@media (max-width: 650px) {
+  .teamup-footer-top {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .teamup-footer-bottom {
+    flex-direction: column;
+  }
+}
+/* Typography */
+:root {
+  --app-font-sans: 'Inter', system-ui, sans-serif;
+}
+
+body,
+button,
+input,
+textarea,
+select,
+.display-font,
+.brand,
+h1, h2, h3, h4,
+.project-card h2,
+.student-card-heading h2,
+.empty-state h2,
+.teamup-error h2,
+.owned-project-head h3,
+.roster-card h3,
+.joined-project h3 {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.035em;
+}
+
+/* Dark footer */
+.site-footer.teamup-footer {
+  background: #11131b;
+  border-top: 1px solid #303545;
+  padding: 32px 0 20px;
+  color: #edf0f8;
+}
+
+.teamup-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.teamup-footer .brand {
+  color: #f5f7fb;
+  font-size: 24px;
+  letter-spacing: -1px;
+}
+
+.teamup-footer .brand-mark {
+  background: #c6f778;
+  color: #17220d;
+}
+
+.site-footer.teamup-footer p {
+  max-width: 360px;
+  margin: 12px 0 0;
+  color: #aeb7cb;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.teamup-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: 8px;
+}
+
+.teamup-footer-links a {
+  color: #d3d9e8;
+  font-size: 13px;
+  transition: color 150ms ease;
+}
+
+.teamup-footer-links a:hover {
+  color: #c6f778;
+}
+
+.teamup-footer-links a:focus-visible {
+  outline: 2px solid #c6f778;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+
+.teamup-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid #292e3d;
+  color: #9ca7bd;
+  font-size: 12px;
+}
+
+@media (max-width: 650px) {
+  .teamup-footer-top {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .teamup-footer-bottom {
+    flex-direction: column;
+  }
+}
+/* Complete the profile page's dark theme */
+.app-page .profile-form-card {
+  background: #1c1f2a;
+  border: 1px solid #34394b;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px #00000026;
+}
+
+.app-page .form-card-heading,
+.app-page .form-submit-row,
+.app-page .privacy-note {
+  border-color: #34394b;
+}
+
+.app-page .form-card-heading h2,
+.app-page .profile-form .field label,
+.app-page .profile-form .field-label {
+  color: #f0f2fa;
+}
+
+.app-page .profile-avatar {
+  background: #d9c5f5;
+  color: #35224f;
+  font-family: inherit;
+}
+
+.app-page .profile-form :is(
+  .helper, .optional, .bio-count, .hours-wrap > span
+),
+.app-page .privacy-note {
+  color: #adb7cc;
+}
+
+.app-page .profile-form .control {
+  background-color: #141720;
+  color: #f0f2fa;
+  border-color: #3d455b;
+}
+
+.app-page .profile-form .control:focus {
+  border-color: #c6f778;
+  box-shadow: 0 0 0 3px #c6f77820;
+}
+
+.app-page .profile-form .select-control {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23c6f778' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.app-page .skill-choice {
+  background: #262b3a;
+  border-color: #41495f;
+  color: #d5dced;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.app-page .skill-choice:hover {
+  background: #323a49;
+  border-color: #a0bf78;
+  color: #efffdc;
+}
+
+.app-page .skill-choice.selected {
+  background: #c6f778;
+  border-color: #c6f778;
+  color: #17220d;
+}
+
+.app-page .profile-form .field-error {
+  color: #ffb4b4;
+}
+
+.app-page .profile-form-card .success-box {
+  background: #203b2e;
+  border-color: #477a5d;
+  color: #c3f6d5;
+}
+
+.app-page .profile-form-card .error-box {
+  background: #40262d;
+  border-color: #89505c;
+  color: #ffd0d7;
+}
+
+.app-page .profile-form-card .load-inline {
+  background: #282d3d;
+  color: #d1d8eb;
 }
