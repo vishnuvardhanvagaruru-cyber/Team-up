@@ -421,6 +421,61 @@ async function readApplicationDto(context: AuthContext, id: string) {
   );
 }
 
+router.get("/projects/:projectId/insights", async (req, res): Promise<void> => {
+  const context = await authenticate(req, res);
+  if (!context) return;
+  const id = req.params.projectId;
+  if (!validUuid(id)) {
+    res.status(400).json({ error: "Invalid project id." });
+    return;
+  }
+  res.set("Cache-Control", "no-store");
+  try {
+    // Check membership before reading any team or applicant information.
+    const membership = await restRows(context, "project_members", {
+      select: memberColumns, project_id: `eq.${id}`,
+      user_id: `eq.${context.userId}`, limit: "1",
+    });
+    if (!membership.length) {
+      res.status(403).json({ error: "Team Fit is available to this project's members only." });
+      return;
+    }
+    const projects = await restRows(context, "projects", {
+      select: projectColumns, id: `eq.${id}`, limit: "1",
+    });
+    if (!projects.length) {
+      res.status(404).json({ error: "Project not found." });
+      return;
+    }
+    const project = projects[0];
+    const isOwner = project.owner_id === context.userId;
+    const [members, applications] = await Promise.all([
+      restRows(context, "project_members", { select: memberColumns, project_id: `eq.${id}`, order: "joined_at.asc" }),
+      isOwner ? restRows(context, "applications", { select: applicationColumns, project_id: `eq.${id}`, status: "eq.pending", order: "created_at.asc" }) : Promise.resolve([] as Row[]),
+    ]);
+    const profiles = await profilesById(context, [
+      stringValue(project.owner_id),
+      ...members.map(row => stringValue(row.user_id)),
+      ...applications.map(row => stringValue(row.applicant_id)),
+    ]);
+    function person(userId: string, role: string) {
+      const profile = profiles.get(userId);
+      const hours = profile?.hours_available_per_week;
+      return { userId, name: stringValue(profile?.name, "TeamUp student"), role,
+        skills: stringArray(profile?.skills),
+        hoursAvailablePerWeek: typeof hours === "number" && Number.isFinite(hours) && hours >= 0 ? hours : null,
+        portfolioUrl: typeof profile?.portfolio_url === "string" ? profile.portfolio_url : null,
+        profileAvailable: Boolean(profile) };
+    }
+    res.json({
+      project: toProject(project, profiles.get(stringValue(project.owner_id)), stringArray(profiles.get(context.userId)?.skills)),
+      isOwner,
+      members: members.map(row => person(stringValue(row.user_id), stringValue(row.role))),
+      applicants: applications.map(row => ({ ...person(stringValue(row.applicant_id), stringValue(row.selected_role)), applicationId: stringValue(row.id), introduction: stringValue(row.introduction) })),
+    });
+  } catch (error) { handleError(req, res, error); }
+});
+
 router.get("/projects", async (req, res): Promise<void> => {
   const context = await authenticate(req, res);
   if (!context) return;

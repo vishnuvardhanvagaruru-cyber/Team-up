@@ -17,6 +17,8 @@ import type { Application, DashboardData, Project, ProjectInput, Student } from 
 import { useQueryClient } from '@tanstack/react-query';
 import { ArrowRight, ArrowUpRight, Check, ExternalLink, Search, UsersRound } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { TeamFit } from '@/components/team-fit';
+import { Skill } from '@workspace/api-client-react';
 
 const categories = ['Hackathon', 'Academic', 'Research', 'Open source', 'Community', 'Other'];
 
@@ -29,6 +31,7 @@ function readableError(error: unknown, fallback: string) {
 }
 
 function invalidateTeamup(queryClient: ReturnType<typeof useQueryClient>) {
+  void queryClient.invalidateQueries({ queryKey: ['team-fit'] });
   void queryClient.invalidateQueries({ queryKey: getGetDashboardQueryKey() });
   void queryClient.invalidateQueries({ queryKey: ['/api/projects'] });
   void queryClient.invalidateQueries({ queryKey: ['/api/students'] });
@@ -106,6 +109,7 @@ function ProjectForm({ project, onCancel, onSaved }: {
       <div className="field"><label htmlFor="project-skills">Required skills</label><input id="project-skills" className="control" value={values.requiredSkills} onChange={event => set('requiredSkills', event.target.value)} placeholder="React, research, prototyping" /><span className="helper">Separate skills with commas. Leave blank if none are required.</span></div>
       <div className="field"><label htmlFor="project-roles">Open roles</label><input id="project-roles" className="control" required value={values.openRoles} onChange={event => set('openRoles', event.target.value)} placeholder="Frontend developer, Designer" /><span className="helper">Applicants choose one of these roles.</span></div>
     </div>
+    <div className="fit-quick-skills"><span className="helper">Use the same skill names as student profiles for useful matching:</span><div className="skill-pills">{Object.values(Skill).map(item => <button type="button" key={item} onClick={() => set('requiredSkills', [...new Set([...values.requiredSkills.split(',').map(s => s.trim()).filter(Boolean), item])].join(', '))}>{item} +</button>)}</div></div>
     <div className="form-row">
       <div className="field"><label htmlFor="project-capacity">Team capacity, including you</label><input id="project-capacity" className="control" type="number" required min={2} max={100} step={1} value={values.totalCapacity} onChange={event => set('totalCapacity', event.target.value)} /></div>
       <div className="field"><label htmlFor="project-deadline">Application deadline</label><input id="project-deadline" className="control" type="date" required min={new Date().toISOString().slice(0, 10)} value={values.deadline} onChange={event => set('deadline', event.target.value)} /></div>
@@ -261,6 +265,7 @@ export function DashboardTeamup({ data }: { data: DashboardData }) {
       {error && <div className="error-box" role="alert">{error}</div>}{closedMessage && <div className="success-box" role="status">{closedMessage}</div>}
     </section>
 
+    {data.rosters.length > 0 && <section className="teamup-panel"><div className="teamup-section-heading"><div><span className="card-kicker">TEAM FIT STUDIO</span><h3>Fill the gaps. Start building.</h3><p className="teamup-muted">A private planning view for your actual teams.</p></div></div>{data.rosters.map(roster => <div key={roster.project.id} className="fit-project"><h4>{roster.project.title}</h4><TeamFit projectId={roster.project.id} /></div>)}</section>}
     <div className="teamup-two-column">
       <section className="teamup-panel">
         <div className="teamup-section-heading"><div><span className="card-kicker">REQUESTS TO JOIN</span><h3>Applications received</h3></div></div>

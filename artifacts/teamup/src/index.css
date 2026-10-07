@@ -469,6 +469,55 @@ textarea.control { min-height: 112px; resize: vertical; }
 .teamup-error { border-color: #f1d4d1; background: #fffafa; }
 .teamup-error h2 { margin: 0 0 8px; color: #783c3b; font: 750 18px 'Manrope', sans-serif; }
 .teamup-error p { color: #8a6260; font-size: 12px; }
+.fit-project { margin-top: 22px; }
+.fit-project > h3 { font-size: 17px; color: #303b5a; }
+.fit-shell { border: 1px solid #dedcf3; border-radius: 16px; overflow: hidden; background: #fff; }
+.fit-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 19px; border: 0; color: #5146ba; background: #f5f3ff; text-align: left; cursor: pointer; font: 700 14px inherit; }
+.fit-toggle > span { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.fit-toggle small { font-size: 11px; font-weight: 400; color: #65627e; }
+.fit-toggle[aria-expanded="true"] > svg { transform: rotate(180deg); }
+.fit-body { padding: 24px; color: #556078; font-size: 13px; line-height: 1.65; }
+.fit-body h3 { margin: 6px 0; font-size: 25px; color: #273250; }
+.fit-body h4 { display: flex; gap: 8px; align-items: center; margin: 24px 0 12px; color: #303b5a; font-size: 15px; }
+.fit-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+.fit-stats > div { display: grid; padding: 16px; border-radius: 12px; background: #f6f7fc; }
+.fit-stats strong { color: #5146ba; font-size: 27px; line-height: 1.4; }
+.fit-stats span { font-size: 11px; }
+.fit-note { color: #737a8d; font-size: 11px; line-height: 1.65; }
+.fit-skill-map { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.fit-skill { display: grid; gap: 4px; padding: 15px; border-radius: 12px; border: 1px solid #d9ebe3; }
+.fit-skill span { font-size: 12px; overflow-wrap: anywhere; }
+.fit-skill small { font-size: 10px; }
+.fit-covered { background: #f1faf6; color: #29634d; }
+.fit-missing { background: #fff9ee; color: #805d20; border-color: #f0dfb8; }
+.fit-planning { margin-top: 24px; padding: 1px 18px 10px; border-radius: 12px; background: #f6f7fc; }
+.fit-planning input[type="range"] { display: block; width: 100%; margin: 18px 0; accent-color: #6353df; }
+.fit-simulation { display: grid; gap: 4px; padding: 14px 16px; background: #edeaff; color: #5146ba; border-radius: 12px; }
+.fit-simulation strong { font-size: 19px; }
+.fit-simulation span { font-size: 12px; }
+.fit-candidate-list { display: grid; gap: 9px; margin: 12px 0; }
+.fit-candidate { display: flex; gap: 12px; align-items: flex-start; padding: 15px; border: 1px solid #e4e7ef; border-radius: 12px; cursor: pointer; }
+.fit-candidate input { margin-top: 5px; width: 17px; height: 17px; flex: 0 0 auto; accent-color: #6353df; }
+.fit-candidate > span { display: grid; gap: 4px; overflow-wrap: anywhere; }
+.fit-candidate strong { color: #303b5a; }
+.fit-candidate small { font-weight: 400; }
+.fit-candidate span span { font-size: 12px; }
+.fit-selected { background: #f7f5ff; border-color: #a89ceb; }
+.fit-adds { color: #4e438e; }
+.fit-kickoff { margin-top: 25px; padding-top: 1px; border-top: 1px solid #e4e7ef; }
+.fit-kickoff label { display: block; margin: 14px 0 8px; font-weight: 600; }
+.fit-kickoff textarea { min-height: 90px; width: 100%; resize: vertical; }
+.fit-kickoff ol { padding-left: 20px; }
+.fit-quick-skills { display: flex; flex-wrap: wrap; gap: 7px; }
+.fit-quick-skills button { border: 1px solid #dedcf3; border-radius: 20px; padding: 6px 10px; background: #f6f5ff; color: #5146ba; font-size: 11px; cursor: pointer; }
+.fit-toggle:focus-visible, .fit-candidate:focus-within, .fit-quick-skills button:focus-visible { outline: 2px solid #7464df; outline-offset: 2px; }
+@media (max-width: 700px) {
+  .fit-body { padding: 16px; }
+  .fit-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fit-skill-map { grid-template-columns: 1fr; }
+  .fit-toggle small { width: 100%; padding-left: 27px; }
+  .fit-kickoff .btn { width: 100%; justify-content: center; }
+}
 .student-filters { grid-template-columns: minmax(250px, 1.5fr) minmax(180px, .7fr); }
 .student-card { gap: 12px; }
 .student-card-heading { display: flex; align-items: center; gap: 12px; }
