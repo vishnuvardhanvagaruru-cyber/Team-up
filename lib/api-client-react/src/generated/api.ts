@@ -1028,7 +1028,7 @@ export const getSaveMyProfileUrl = () => {
 
 
 
-  return `/api/dashboard`
+  return `/api/profile`
 }
 
 /**
