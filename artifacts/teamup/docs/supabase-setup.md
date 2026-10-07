@@ -44,15 +44,21 @@ are designed to be re-runnable.
 
 In **Authentication → URL Configuration**:
 
-1. Set **Site URL** to this TeamUp app's published Replit origin after it is
-   published.
-2. Add the current TeamUp Replit development origin and published origin to
-   **Redirect URLs**. The app sends email confirmation links to
-   `<app-origin>/dashboard` and password recovery links to
-   `<app-origin>/reset-password`; allow those paths, for example
+1. Set **Site URL** to the TeamUp Replit app origin you want confirmation
+   emails to open. Do not leave it as `http://localhost:3000` for normal use.
+2. Add the current TeamUp Replit development origin and, after publishing, the
+   published origin to **Redirect URLs**. The app sends confirmation links to
+   `<current-app-origin>/dashboard` and password recovery links to
+   `<current-app-origin>/reset-password`; allow those paths, for example
    `https://<teamup-replit-dev-domain>/**` and
    `https://<teamup-published-domain>/**`.
-3. If you run Vite locally, also allow `http://localhost:5173/**`.
+3. For local development, allow the actual local origin you use, such as
+   `http://localhost:3000/**` or `http://localhost:5173/**`.
 
-Supabase's redirect allow-list must include each actual app origin. The
-published domain is not available until the TeamUp artifact is published.
+Supabase's redirect allow-list must include each actual app origin. A
+confirmation link created while using `localhost` will return to that same
+computer, and will fail with “connection refused” if the local dev server is
+not running. To use TeamUp from Replit, sign up from the Replit preview and
+allow that preview origin in Supabase. Changing these settings does not alter
+links already sent; request a new confirmation email after updating them. If
+the email was already confirmed, try logging in from the Replit preview.
